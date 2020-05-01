@@ -1,3 +1,48 @@
 @import "~@swimlane/ngx-datatable/index.css";
 @import "~@swimlane/ngx-datatable/themes/material.scss";
 @import "~@swimlane/ngx-datatable/assets/icons.css";
+.nestedTable {
+  background: #f1f1f1;
+  .datatable-row-center {
+    datatable-body-cell {
+      &:first-child {
+        padding-left: 60px !important;
+      }
+      .datatable-tree-button {
+        display: none;
+      }
+    }
+  }
+}
+.datatable-body-row {
+  .datatable-tree-button {
+    background: transparent;
+    background: #333;
+    padding: 1px 5px;
+    color: #fff;
+    margin-right: 10px;
+    position: relative;
+    border: 0;
+    cursor: pointer;
+    &:after {
+      content: "";
+    }
+    .icon {
+      display: none;
+    }
+  }
+  &.expandedRow {
+    .datatable-tree-button {
+      &:after {
+        content: "-";
+      }
+    }
+  }
+  &.collapsedRow {
+    .datatable-tree-button {
+      &:after {
+        content: "+";
+      }
+    }
+  }
+}

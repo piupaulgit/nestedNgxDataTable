@@ -10,7 +10,14 @@ export class AppComponent implements OnInit {
   rows: any = employeeData;
   columns: any = columns;
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.rows.map((item) => {
+      item.collapsed = true;
+      item.teamMembers.filter((teamMember) => {
+        teamMember.nestedTable = true;
+      });
+    });
+  }
 
   isTreeColumn(columnLabel) {
     if (columnLabel === 'name') {
@@ -19,6 +26,28 @@ export class AppComponent implements OnInit {
   }
 
   onTreeAction(event: any) {
-    console.log(event);
+    const currentRow = event.row;
+    const nestedMembers = currentRow.teamMembers;
+    this.rows.map((item, index) => {
+      if (item.id === currentRow.id) {
+        if (item.collapsed) {
+          this.rows.splice(index + 1, 0, ...nestedMembers);
+          item.collapsed = false;
+        } else if (!item.collapsed) {
+          this.rows.splice(index + 1, nestedMembers.length);
+          item.collapsed = true;
+        }
+      }
+    });
+    this.rows = JSON.parse(JSON.stringify(this.rows));
+    console.log(this.rows);
+  }
+
+  getRowClass(row) {
+    return {
+      nestedTable: row.nestedTable === true,
+      expandedRow: row.collapsed === false,
+      collapsedRow: row.collapsed === true,
+    };
   }
 }

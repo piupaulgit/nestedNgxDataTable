@@ -7,6 +7,7 @@
     [footerHeight]="50"
     [rowHeight]="50"
     [columnMode]="'force'"
+    [rowClass]="getRowClass"
     (treeAction)="onTreeAction($event)"
   >
     <ngx-datatable-column
@@ -14,10 +15,14 @@
       [name]="column.label"
       [prop]="column.value"
       [flexGrow]="3"
-      [isTreeColumn]="isTreeColumn(column.label)"
+      [isTreeColumn]="true"
     >
-      <ng-template let-value="value" ngx-datatable-cell-template>
-        {{ value }}
+      <ng-template ngx-datatable-header-template>
+        <span>{{ column.label }}</span>
+      </ng-template>
+
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span>{{ value }}</span>
       </ng-template>
     </ngx-datatable-column>
   </ngx-datatable>
